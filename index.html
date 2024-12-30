@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystico Story</title>
+</head>
+<body>
+    <script>
+        function handleDeepLink() {
+            const path = window.location.pathname;
+            const storyId = path.split('/story/')[1];
+            
+            // Deep link URLs (replace these with your actual deep link schemes)
+            const deepLinkUrl = `mystico://story/${storyId}`;
+            const androidPackageName = 'com.mystico.app'; // Replace with your Android package name
+            const iosAppId = 'id123456789'; // Replace with your iOS App Store ID
+            
+            // App store URLs
+            const androidStoreUrl = `https://play.google.com/store/apps/details?id=${androidPackageName}`;
+            const iosStoreUrl = `https://apps.apple.com/app/${iosAppId}`;
+            
+            // Detect platform
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            
+            if (isAndroid) {
+                // Try to open Android app, fall back to Play Store
+                window.location.href = deepLinkUrl;
+                setTimeout(() => {
+                    window.location.href = androidStoreUrl;
+                }, 1000);
+            } else if (isIOS) {
+                // Try to open iOS app, fall back to App Store
+                window.location.href = deepLinkUrl;
+                setTimeout(() => {
+                    window.location.href = iosStoreUrl;
+                }, 1000);
+            } else {
+                // For desktop or other devices, show a message or redirect to a default page
+                document.body.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h1>Download Mystico App</h1>
+                        <p>Please visit on your mobile device or download our app:</p>
+                        <p><a href="${iosStoreUrl}">iOS App Store</a></p>
+                        <p><a href="${androidStoreUrl}">Google Play Store</a></p>
+                    </div>
+                `;
+            }
+        }
+
+        // Run the deep link handler when the page loads
+        window.onload = handleDeepLink;
+    </script>
+</body>
+</html>
