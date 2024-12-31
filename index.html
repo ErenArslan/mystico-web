@@ -8,8 +8,8 @@
 <body>
     <script>
         function handleDeepLink() {
-            const path = window.location.pathname;
-            const storyId = path.split('/story/')[1];
+            const url = new URL(window.location.href);
+            const storyId = url.pathname.split('/story/')[1];
             
             // Deep link URLs (replace these with your actual deep link schemes)
             const deepLinkUrl = `mystico://story/${storyId}`;
